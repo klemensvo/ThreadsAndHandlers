@@ -1,4 +1,5 @@
 # Ways to do concurrency
+
 ## Thread
 class ExampleThread extends Thread {
     @Override
@@ -12,6 +13,7 @@ public void startThread(View view) {
     ExampleThread exampleThread = new ExampleThread();
     exampleThread.start();
 }
+
 # Runnable
 remark: preferred way to do it compared to Thread (Thread-calls implement the Runnable interface)
 first implement the Runnable interface and then start it on a new thread with new Thread(runnable).start();
@@ -44,6 +46,7 @@ public void startThread(View view) {
     ExampleRunnable exampleRunnable = new ExampleRunnable();
     new Thread(exampleRunnable).start();
 }
+
 # Handler
 a handler is here to put work into a message queue, must be instantiated in the main thread
 Override
@@ -68,6 +71,7 @@ Override
         }
     }
 }
+
 # Looper
 instead, instead of mainHandler created in MainActivity, we can create a threadHandler in the Runnable, by passing Looper.getMainLooper() to the new Handler
 
@@ -78,6 +82,7 @@ Handler threadHandler = new Handler(Looper.getMainLooper());
                             buttonStartThread.setText("50%");
                         }
                     });
+                    
  # .post() from View class
  this is a built-in function that posts new work to the main thread (where the View was instantiated
  
@@ -93,6 +98,7 @@ Handler threadHandler = new Handler(Looper.getMainLooper());
               buttonStartThread.setText("50%");
          }
  });
+ 
  # runOnUiThread
  runOnUiThread(new Runnable() { // runOnUiThread is an activity method
                                 // can be called directly       
@@ -102,3 +108,25 @@ Handler threadHandler = new Handler(Looper.getMainLooper());
            buttonStartThread.setText("50%");
       }
 });
+
+# Anonymous Runnable
+
+new Thread(new Runnable() { // anonymous call of Runnable
+    @Override
+    public void run() {
+    for (int i = 0; i < 10; i++) {
+        if (i == 4) {
+             buttonStartThread.post(new Runnable() {
+                 @Override
+                 public void run() {
+                     buttonStartThread.setText("40%");
+                 }
+             });
+        }
+        try {
+            Thread.sleep(1000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+    }
+}).start();
