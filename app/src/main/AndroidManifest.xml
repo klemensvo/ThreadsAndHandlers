@@ -10,7 +10,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.ThreadsAndHandlers">
         <activity
-            android:name=".MainActivity"
+            android:name=".MainActivity2"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
