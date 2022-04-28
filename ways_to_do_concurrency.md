@@ -138,3 +138,14 @@ new Thread(new Runnable() { // anonymous call of Runnable
         }
     }
 }).start();
+
+# Messages
+Difference:
+* Runnable sends work to do to the message queue
+* Message sends raw data to the message queue (must be interpreted)
+
+# HandlerThread
+creates a thread, a looper, a messagequeue and a handler for convenience
+
+# IntentService
+uses HandlerThread, but stops as soon as no more work is there to be done
