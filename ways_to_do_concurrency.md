@@ -48,7 +48,15 @@ public void startThread(View view) {
 }
 
 # Handler
-a handler is here to put work into a message queue, must be instantiated in the main thread
+A handler is here to put work into a message queue, must be instantiated in the main thread
+A Handler can only be called, when a Looper has been installed previously: 
+Looper.prepare(); // creates a looper and a message queue (those 2 are tied together!)
+after Looper.prepare() the handler is instantiated with:
+handler = new Handler();
+and then the looper starts the infinite for-loop:
+Looper.loop();
+
+
 Override
     public void run() {
         for (int i = 0; i < seconds; i++) {
